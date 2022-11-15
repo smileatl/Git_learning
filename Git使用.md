@@ -441,6 +441,8 @@ git remote -v
 # git push 远程仓库地址别名 分支名称
 git push origin master  # 推送远程分支
 
+git remote rm origin # 远程仓库的名字修改了，可以先删除再重新添加
+
 # 如果出现远程库与本地库不一致造成的问题
 git pull --rebase origin master
 # 该命令的意思是把远程库中的更新合并到（pull=fetch+merge）本地库中，–-rebase的作用是取消掉本地库中刚刚的commit，并把他们接到更新后的版本库之中。出现如下图执行pull执行成功后，可以成功执行git push origin master操作。
@@ -449,6 +451,23 @@ git pull --rebase origin master
 ```bash
 # 拉取远程仓库中最新的版本：git pull 远程仓库地址 远程地址分支名称
 git pull origin master # 拉取origin仓库的master分支，与本地当前分支合并
+```
+
+## 查看版本，回退版本
+
+```bash
+git log # 显示所有提交记录
+vs： git log --pretty=oneline   # 一行显示版本信息
+补充：
+git log lfa380b5O2a0Ob82bfc8d84c5ab5el5b8fbf7dac # 会显示所有关于这个id以及之前的修改记录
+git log lfa380b5O2a0Ob82bfc8d84c5ab5el5b8fbf7dac -1 # 加上-1参数表示我们只想看到一行记录
+而如果想要查看这条提交记录具体修改了什么内容，可以在命令中加入p参数，命令如下:
+git log Ifa380b502a00b82bfc8d84c5ab5el5b8fbf7dac -1 -p
+
+git reflog   # 查看所有版本信息
+
+git reset  --hard 版本id  # 回退版本
+# 在执行git checkout master或者git pull命令前，执行过git add .及commit命令git commit -m "xxx"，git工具才能给你记录你的版本变化（本地的）,否则丢失代码可能无可挽救。
 ```
 
 
@@ -537,16 +556,11 @@ $ git branch -dr [remote/branch]
 
 
 
-IDEA中操作  
+## 常见错误
 
-![](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7Ksu8UlITwMlbX3kMGtZ9p0wHNIYeTHC8aHGASoDyZO64QicslqiaMb1OJ1Z1LPoic3LBGyDIYBa7XXw/640?wx_fmt=png)
+git中出现“interactive rebase in progress； onto 11dde1e”错误分析与解决方案
 
+```bash
+git rebase --continue   //使用该命令继续代码的提交
+```
 
-
-作业练习：找一个小伙伴，一起搭建一个远程仓库，来练习Git！
-
-1、不要把Git想的很难，工作中多练习使用就自然而然的会了！
-
-2、Git的学习也十分多，看完我的Git教程之后，可以多去思考，总结到自己博客！
-
-  git
