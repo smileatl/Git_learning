@@ -334,11 +334,11 @@ $ git clone [url]  # https://gitee.com/kuangstudy/openclass.git
 版本控制就是对文件的版本控制，要对文件进行修改、提交等操作，首先要知道文件当前在什么状态，不然可能会提交了现在还不想提交的文件，或者要提交的文件没提交上。
 
 *   **Untracked**: 未跟踪, 此文件在文件夹中, 但并没有加入到git库, 不参与版本控制. 通过==git add== 状态变为==Staged==.
-    
 *   **Unmodify**: 文件已经入库, 未修改, 即版本库中的文件快照内容与文件夹中完全一致. 这种类型的文件有两种去处, 如果它被修改, 而变为==Modified==. 如果使用==git rm==移出版本库, 则成为==Untracked==文件
-    
 *   **Modified**: 文件已修改, 仅仅是修改, 并没有进行其他的操作. 这个文件也有两个去处, 通过==git add==可进入暂存==staged==状态, 使用==git checkout== 则丢弃修改过, 返回到==unmodify==状态, 这个==git checkout==即从库中取出文件, 覆盖当前修改 !
-    
+
+（前三种状态都在workspace工作区）
+
 *   **Staged**: 暂存状态. 执行==git commit==则将修改同步到库中, 这时库中的文件和本地文件又变为一致, 文件为==Unmodify==状态. 执行==git reset HEAD filename==取消暂存, 文件状态为Modified
 
 ### 查看文件状态
@@ -358,6 +358,7 @@ git add .                  # 添加所有文件到暂存区
 
 git commit -m "消息内容"    # 提交暂存区中的内容到本地仓库 -m 提交信息
 git commit -m "new file hello.txt"
+git commit -a -m "message"  # -a 参数表示，可以将所有已跟踪文件中的执行修改或删除操作的文件都提交到本地仓库，即使它们没有经过 git add 添加到暂存区。
 ```
 
   
@@ -384,7 +385,7 @@ git commit -m "new file hello.txt"
 #为注释
 *.txt        #忽略所有 .txt结尾的文件,这样的话上传就不会被选中！
 !lib.txt     #但lib.txt除外
-/temp        #仅忽略项目根目录下的TODO文件,不包括其它目录temp
+/temp        #仅忽略项目根目录下的temp文件,不包括其它目录temp
 build/       #忽略build/目录下的所有文件
 doc/*.txt    #会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 ```
@@ -449,9 +450,20 @@ git pull --rebase origin master
 ```
 
 ```bash
+# git push命令用于从将本地的分支版本上传到远程并合并。
+git push <远程主机名> <本地分支名>:<远程分支名>
+# 如果本地分支名与远程分支名相同，则可以省略冒号：
+git push <远程主机名> <本地分支名>
+```
+
+
+
+```bash
 # 拉取远程仓库中最新的版本：git pull 远程仓库地址 远程地址分支名称
 git pull origin master # 拉取origin仓库的master分支，与本地当前分支合并
 ```
+
+
 
 ## 查看版本，回退版本
 
@@ -520,9 +532,13 @@ git分支中常用指令：
 
 # 列出所有本地分支
 git branch
-
 # 列出所有远程分支
 git branch -r
+# 显示所有分支，包括本地和远程分支
+git branch -a
+
+# 切换分支
+git checkout [branch]
 
 # 新建一个分支，但依然停留在当前分支
 git branch [branch-name]
@@ -530,10 +546,7 @@ git branch [branch-name]
 # 新建一个分支，并切换到该分支
 git checkout -b [branch]
 
-# 切换分支
-git checkout [branch]
-
-# 合并指定分支到当前分支
+# 合并指定分支到当前分支，比如当前分支是util，branch是util_test，就是将util_test合并到util
 $ git merge [branch]
 
 # 删除分支
@@ -626,4 +639,17 @@ git reset --hard HEAD^ //回退上一个版本
 git reset --hard commit_id //回退到某个版本 id就是你的版本号
 git push origin HEAD --force //强制推送到远程，可能会受到保护
 ```
+
+
+
+git中一般按q是退出
+
+
+
+```bash
+# 显示自上次提交以来对代码的更改，git diff origin/util将显示相对于初始xv6-labs-2020中util代码的更改
+git diff origin/util
+```
+
+
 
