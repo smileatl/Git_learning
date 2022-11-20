@@ -443,6 +443,7 @@ git remote rm origin # 远程仓库的名字修改了，可以先删除再重新
 
 # git push 远程仓库地址别名 分支名称
 git push origin master  # 推送远程分支
+git push -u origin master # -u 记住推送地址及分支，下次推送只需要输入git push即可.
 
 # 如果出现远程库与本地库不一致造成的问题
 git pull --rebase origin master
