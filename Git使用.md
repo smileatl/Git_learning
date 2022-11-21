@@ -358,7 +358,7 @@ git add .                  # 添加所有文件到暂存区
 
 git commit -m "消息内容"    # 提交暂存区中的内容到本地仓库 -m 提交信息
 git commit -m "new file hello.txt"
-git commit -a -m "message"  # -a 参数表示，可以将所有已跟踪文件中的执行修改或删除操作的文件都提交到本地仓库，即使它们没有经过 git add 添加到暂存区。
+git commit -a -m "message"  # -a 参数表示，可以将所有已跟踪文件中的执行修改或删除操作的文件都提交到本地仓库，即使它们没有经过 git add 添加到暂存区。（或者直接 -am 一样）
 ```
 
   
@@ -558,6 +558,60 @@ $ git push origin --delete [branch-name]
 $ git branch -dr [remote/branch]
 ```
 
+### Git新建远程分支
+
+现在我在master分支上，工作目标是干净的，也没有需要commit的：
+
+`$ git branch`
+ \* master
+ release
+
+```bash
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+```
+
+新建远程分支
+新建一个本地分支：
+
+```bash
+$ git checkout -b localbranch
+```
+
+查看一下现在的分支状态:
+
+```bash
+$ git branch
+*localbranch
+ master
+ release
+```
+
+星号(*)表示当前所在分支。现在的状态是成功创建的新的分支并且已经切换到新分支上。
+
+把新建的本地分支push到远程服务器，远程分支与本地分支同名（当然可以随意起名）：
+
+```bash
+$ git push origin localbranch:localbranch
+```
+
+使用`git branch -a`查看所有分支，会看到`remotes/origin/localbranch`这个远程分支，说明新建远程分支成功。
+
+删除远程分支
+ 我比较喜欢的简单方式，推送一个空分支到远程分支，其实就相当于删除远程分支：
+
+`$ git push origin :localbranch`
+ 也可以使用：
+
+`$ git push origin --delete localbranch`
+ 这两种方式都可以删除指定的远程分支
+
+
+
+### 问题
+
 多个分支如果并行执行，就会导致我们代码不冲突，也就是同时存在多个版本！
 
 
@@ -646,6 +700,8 @@ git push origin HEAD --force //强制推送到远程，可能会受到保护
 git中一般按q是退出
 
 
+
+git diff
 
 ```bash
 # 显示自上次提交以来对代码的更改，git diff origin/util将显示相对于初始xv6-labs-2020中util代码的更改
