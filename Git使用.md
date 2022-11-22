@@ -450,6 +450,8 @@ git pull --rebase origin master
 # 该命令的意思是把远程库中的更新合并到（pull=fetch+merge）本地库中，–-rebase的作用是取消掉本地库中刚刚的commit，并把他们接到更新后的版本库之中。出现如下图执行pull执行成功后，可以成功执行git push origin master操作。
 ```
 
+git push详细解析：
+
 ```bash
 # git push命令用于从将本地的分支版本上传到远程并合并。
 git push <远程主机名> <本地分支名>:<远程分支名>
@@ -457,7 +459,7 @@ git push <远程主机名> <本地分支名>:<远程分支名>
 git push <远程主机名> <本地分支名>
 ```
 
-
+git pull拉去远程仓库中最新的版本：
 
 ```bash
 # 拉取远程仓库中最新的版本：git pull 远程仓库地址 远程地址分支名称
@@ -484,39 +486,6 @@ git reset  --hard 版本id  # 回退版本
 ```
 
 
-
-## IDEA中集成Git
-
-1、新建项目，绑定git。
-
-![](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7Ksu8UlITwMlbX3kMGtZ9p0D8LPGu2SNKXD01IMqDaSkBeP8ibtvnasBYiaReyuZWAl0EjEib8IYf7cQ/640?wx_fmt=png)
-
-注意观察idea中的变化
-
-![](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7Ksu8UlITwMlbX3kMGtZ9p0Cs93BiaOia1Sdk8icdH7vQzPfzIjuoTNYquKzYtrEe5mklhg2b7KOYsow/640?wx_fmt=png)
-
-2、修改文件，使用IDEA操作git。
-
-*   添加到暂存区
-    
-*   commit 提交
-    
-*   push到远程仓库
-    
-
-3、提交测试
-
-![](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7Ksu8UlITwMlbX3kMGtZ9p0tERIszdgLVlUWamyRapfN74aR8XeGFV2OYWiaeR9CkYlfoBefRh2AIA/640?wx_fmt=png)
-
-这些都是单个人的操作！
-
-学习的方式最重要！学会学习！我上课的更多时候都是在教大家去学习一种理念和思想（学习方式）
-
-有道无术、术尚可求。有术无道、止于术！
-
-真正的教学，授人以渔！
-
-  
 
 说明：GIT分支
 --------
@@ -709,4 +678,30 @@ git diff origin/util
 ```
 
 
+
+出现问题：[!remote rejected]:refusing to delete the current branch
+
+```bash
+# 删除远程分支
+$ git push origin --delete [branch-name]
+```
+
+删除指定的分支是远程仓库当前的默认分支，所有无法删除
+
+方法：修改默认分支
+
+
+
+出现问题：remote: Support for password authentication was removed on August 13, 2021.
+fatal: 'https://github.com/smileatl/MIT6.S081-labs.git/' 鉴权失败
+2021.8.13起，github要求使用基于令牌的身份验证
+
+![1669031239456](Git使用.assets/1669031239456.png)
+
+重新去github上生成令牌，当前生成的令牌是：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
+
+```bash
+git remote set-url origin  https://<your_token>@github.com/<USERNAME>/<REPO>.git
+git remote set-url github https://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@github.com/smileatl/MITS6.S081-labs.git
+```
 
